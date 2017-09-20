@@ -1,1 +1,103 @@
-<h1> THis is a test </h1>
+
+<div class="container-fluid" style="margin-top: 20px;">
+  <div class="row">
+    <div class="col-lg-7">
+      <!--  -->
+      <canvas id="displayCanvas" width="800" height="800" style="border:1px solid #000000; margin-top: 0px;"></canvas>
+    </div>
+    <div class="col-lg-5">
+      <div class = "panel panel-primary">
+        <div class="panel-heading">The basic traits defining your visualization.</div>
+        <div class="panel-body">
+          <!-- the field function -->
+          <label for="functionInput">Function of the field:</label>
+          <input id="functionInput" type="text" class="form-control input-lg" value="abs(d*d*d / (x * x + y * y) * y)"/>
+          
+          <!-- the field size -->
+          <label style="margin-top: 10px;" for="fieldSizeInput">Size of the field (<span id="fieldSizeSpan">400</span>) :</label>
+          <input id = "fieldSizeInput" type="range" min="1" max="800" value="400" onchange="updateFieldSizeSpan(this.value)"/>
+          
+          <!-- the field center -->
+          <div class="form-group row"> 
+            <div class="col-xs-6">
+              <label for="xCenterInput">X Axis Center:</label>
+              <input id="xCenterInput" type="text" class="form-control" value="0" onchange="updateXCenter(this.value)"/>
+            </div>            
+            <div class="col-xs-6">
+              <label for="yCenterInput">Y Axis Center:</label>
+              <input id="yCenterInput" type="text" class="form-control" value="0" onchange="updateYCenter(this.value)" />
+            </div>
+          </div>
+          <!-- the field zoom-->
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="zoomInput">Zoom modifier:</label>
+                <div class="col-sm-9">
+                  <input id="zoomInput" type="text" class="form-control" value="1" onchange="updateZoomValue(this.value)"/>
+                </div>
+            </div>
+          </form>
+          <!-- the coloring method -->
+          <label for="coloringMethodDiv" style="margin-top:4px;">Coloring method:</label>
+          <div class="btn-group btn-group-justified" id="coloringMethodDiv">
+            <a class="btn btn-default" onclick="colorModulus()" id="modulusButton">Modulus</a>
+            <a class="btn btn-default active" onclick="colorHue()" id="valueToHueButton">Value to Hue</a>
+            <a class="btn btn-default" onclick="colorMSD()" id="MSDButton">Most Sig. Digit</a>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-lg btn-success btn-block" onclick="updateDisplay()">Render!</button>
+
+      
+
+      
+      <!-- Information regarding the current pattern -->
+      <div class="panel panel-info" style="margin-top: 20px;">
+        <div class="panel-heading">Information regarding current visualisation</div>
+        <div class = "panel-body text-center">
+          <textarea class="form-control" rows="1" cols="80" id="informationOutput">Center(0,0) : Zoom(1) : Function{ abs(d*d*d / (x * x + y * y) * y) }</textarea>
+        </div>
+      </div>
+      
+      <!-- Nudgebox -->
+      <div class="panel panel-danger">
+        <div class="panel-heading">Nudge the current pattern values</div>
+        <div class="panel-body">
+          
+          <label for="nudgeSizeDiv">Nudge amount:</label>
+          <div class="btn-group btn-group-justified" id ="nudgeSizeDiv" >
+            <a class="btn btn-default" id="nudgeSmall" onclick="updateNudgeSmall()">Small</a>
+            <a class="btn btn-default active" id="nudgeMedium" onclick="updateNudgeMedium()">Medium</a>
+            <a class="btn btn-default" id="nudgeLarge" onclick="updateNudgeLarge()">Large</a>
+          </div> 
+          
+          <label for="nudgeTypeDiv" style="margin-top: 5px;">Nudge type:</label>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="btn-group btn-group-justified">
+                <a class="btn btn-primary" onclick="nudgeLeft()"><span class="glyphicon glyphicon-arrow-left"></span> Left</a>
+                <a class="btn btn-primary" onclick="nudgeRight()">Right <span class="glyphicon glyphicon-arrow-right"></span></a>
+              </div> 
+            </div>
+             <div class="col-sm-4">
+              <div class="btn-group btn-group-justified">
+                <a class="btn btn-primary" onclick="nudgeDown()"><span class="glyphicon glyphicon-arrow-down"></span> Down</a>
+                <a class="btn btn-primary" onclick="nudgeUp()">Up <span class="glyphicon glyphicon-arrow-up"></span></a>
+              </div> 
+            </div>
+            <div class="col-sm-4">
+              <div class="btn-group btn-group-justified">
+                <a class="btn btn-primary" onclick="nudgeZoomOut()">Zoom out</a>
+                <a class="btn btn-primary" onclick="nudgeZoomIn()">Zoom in</a>
+              </div> 
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
