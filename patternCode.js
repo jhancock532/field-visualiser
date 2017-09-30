@@ -1,16 +1,23 @@
-//(x+y+x*x+y*y)/(sin(d/(x*y))*sin(d/(x*y)))*d*1 zoom 250 weird negative circle
+//(x+y+x*x+y*y)/(sin(d/(x*y))*sin(d/(x*y)))*d*1 zoom 250 negative circle
 
 //these are the colors for the most sig digit coloring 
 var colorArray = ["#ffffff","#ff0000","#ff9900","#ffff00","#2db300","#004d00","#009999","#0033cc","#cc00ff","#ff3399"];
 var coloringStyle = 1;
 
 var scope = {
-  d: 1,
-  x: 1,
-  y: 1
+  d: 1, //field definition, that is the number of pixels wide and high the field is
+  x: 1, //x axis location
+  y: 1, //y axis location
+  r: 1, //pythag distance from the center (for polar stuff) 
+  ty: 1, //angle from the center, from inverse tan (y/x)
+  tx: 1 //same, but inverse tan (x/y)
 };
 
-var exponentialScale = [];
+var pythag = math.compile("sqrt(y*y+x*x)"); //for r
+var trigY = math.compile("(2*d*atan(abs(y/x)))/pi"); //for ty
+var trigX = math.compile("(2*d*atan(abs(x/y)))/pi"); //for tx
+
+var exponentialScale = []; //this is used for a smooth zoom nudge
 for (var i = -100; i < 100; i++){
   exponentialScale.push(math.exp(i/4));
 }
@@ -174,7 +181,9 @@ function nudgeZoomOut(){
 
 function updateDisplay() {
   scope.d = fieldSize;
-  var code = math.compile(document.getElementById("functionInput").value);// compile an expression
+  var code = math.compile(document.getElementById("functionInput").value);// compile expressions
+
+  
   updateInformation();
   var xAxis = [];
   var yAxis = [];
@@ -210,6 +219,11 @@ function updateDisplay() {
     for (y = 0; y < fieldSize; y++) {
       scope.x = xAxis[x];
       scope.y = yAxis[y];
+      
+      scope.r = pythag.eval(scope); //these are the polar variables
+      scope.tx = trigX.eval(scope); 
+      scope.ty = trigY.eval(scope);
+      
       var result = code.eval(scope);
       
       if (y === 0 || x === 0) { //code to create a black border
@@ -276,4 +290,4 @@ function updateDisplay() {
   }
 }
 
-window.onload = updateDisplay();  
+window.onload = updateDisplay();  //doesn't work on most web browsers
