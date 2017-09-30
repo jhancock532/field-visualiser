@@ -1,4 +1,5 @@
 //(x+y+x*x+y*y)/(sin(d/(x*y))*sin(d/(x*y)))*d*1 zoom 250 negative circle
+//bitXor(round(r),round(tx))*d zoom 0.49 (0.5 and any zoom that creates a zero x will crash half the render it seems)
 
 //these are the colors for the most sig digit coloring 
 var colorArray = ["#ffffff","#ff0000","#ff9900","#ffff00","#2db300","#004d00","#009999","#0033cc","#cc00ff","#ff3399"];
