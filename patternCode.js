@@ -291,4 +291,8 @@ function updateDisplay() {
   }
 }
 
-window.onload = updateDisplay();  //doesn't work on most web browsers
+//window.onload = updateDisplay();  //doesn't work on most web browsers
+
+document.addEventListener("DOMContentLoaded", function() { //friendly with firefox
+    updateDisplay();
+});
