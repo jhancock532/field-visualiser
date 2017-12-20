@@ -1,24 +1,19 @@
-//(x+y+x*x+y*y)/(sin(d/(x*y))*sin(d/(x*y)))*d*1 zoom 250 negative circle
-//bitXor(round(r),round(tx))*d zoom 0.49 (0.5 and any zoom that creates a zero x will crash half the render it seems)
+//(x+y+x*x+y*y)/(sin(d/(x*y))*sin(d/(x*y)))*d*1 zoom 250 weird negative circle
 
 //these are the colors for the most sig digit coloring 
 var colorArray = ["#ffffff","#ff0000","#ff9900","#ffff00","#2db300","#004d00","#009999","#0033cc","#cc00ff","#ff3399"];
 var coloringStyle = 1;
 
 var scope = {
-  d: 1, //field definition, that is the number of pixels wide and high the field is
-  x: 1, //x axis location
-  y: 1, //y axis location
-  r: 1, //pythag distance from the center (for polar stuff) 
-  ty: 1, //angle from the center, from inverse tan (y/x)
-  tx: 1 //same, but inverse tan (x/y)
+  d: 1,
+  x: 1,
+  y: 1,
+  r: 1,
+  ty: 1,
+  tx: 1
 };
 
-var pythag = math.compile("sqrt(y*y+x*x)"); //for r
-var trigY = math.compile("(2*d*atan(abs(y/x)))/pi"); //for ty
-var trigX = math.compile("(2*d*atan(abs(x/y)))/pi"); //for tx
-
-var exponentialScale = []; //this is used for a smooth zoom nudge
+var exponentialScale = [];
 for (var i = -100; i < 100; i++){
   exponentialScale.push(math.exp(i/4));
 }
@@ -182,12 +177,20 @@ function nudgeZoomOut(){
 
 function updateDisplay() {
   scope.d = fieldSize;
-  var code = math.compile(document.getElementById("functionInput").value);// compile expressions
-
+  var code = math.compile(document.getElementById("functionInput").value);// compile an expression
+  
+  var pythag = math.compile("sqrt(y*y+x*x)");
+  var trigY = math.compile("(2*d*atan(abs(y/x)))/pi");
+  var trigX = math.compile("(2*d*atan(abs(x/y)))/pi");
   
   updateInformation();
   var xAxis = [];
   var yAxis = [];
+  
+  var hueSpectrum = [];
+  for (var l = 0; l < 360; l+=1){ //distinct for loops as there are possibly different center points
+    hueSpectrum.push(0);
+  }
   
   var xMax, xMin, yMax, yMin;
   
@@ -220,12 +223,15 @@ function updateDisplay() {
     for (y = 0; y < fieldSize; y++) {
       scope.x = xAxis[x];
       scope.y = yAxis[y];
-      
-      scope.r = pythag.eval(scope); //these are the polar variables
-      scope.tx = trigX.eval(scope); 
+      scope.r = pythag.eval(scope);
+      scope.tx = trigX.eval(scope);
       scope.ty = trigY.eval(scope);
-      
       var result = code.eval(scope);
+      var hueValue = parseInt(result*360/(fieldSize*fieldSize)) % 360;
+      if (hueValue < 0){
+        hueValue += 360;
+      }
+      hueSpectrum[hueValue] += 1;
       
       if (y === 0 || x === 0) { //code to create a black border
         ctx.fillStyle = "#000000";
@@ -288,6 +294,30 @@ function updateDisplay() {
         }
       }
     }
+  }
+  //Here the hue spectrum is displayed.
+  var hueCanvas = document.getElementById("hueSpectrumCanvas");
+  var ctx2 = hueCanvas.getContext("2d");
+  var maxValue = Math.max(...hueSpectrum);
+  ctx2.clearRect(0, 0, hueCanvas.width, hueCanvas.height);
+  /*
+  ctx2.fillStyle = "hsl("+10+",100%,50%)";
+  ctx2.beginPath();
+  ctx2.moveTo(10,100);
+  ctx2.lineTo(10,hueSpectrum[10]);
+  ctx2.stroke();
+  console.log(hueSpectrum[10]);
+  */
+  
+  for (var i = 0; i < 360; i++){
+    ctx2.fillStyle = "hsl("+i+",100%,50%)";
+    
+    ctx2.fillRect(
+      i,
+      100-(hueSpectrum[i]/maxValue*100),
+      1,
+      hueSpectrum[i]/maxValue*100,
+    );
   }
 }
 
