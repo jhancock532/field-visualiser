@@ -17,7 +17,7 @@
         <div class="panel-body">
           <!-- the field function -->
           <label for="functionInput">Function of the field:</label>
-          <input id="functionInput" type="text" class="form-control input-lg" value="abs(d*d*d / (x * x + y * y) * y)"/>
+          <input id="functionInput" type="text" class="form-control input-lg" value="abs(d*d*d / (r * r + tx * tx) * tx)"/>
           
           <!-- the field size -->
           <label style="margin-top: 10px;" for="fieldSizeInput">Size of the field (<span id="fieldSizeSpan">400</span>) :</label>
@@ -63,6 +63,7 @@
         <div class="panel-heading">Information regarding current visualisation</div>
         <div class = "panel-body text-center">
           <textarea class="form-control" rows="1" cols="80" id="informationOutput">Center(0,0) : Zoom(1) : Function{ abs(d*d*d / (x * x + y * y) * y) }</textarea>
+          <canvas id="hueSpectrumCanvas" width="360" height="100" style="border:1px solid #000000; margin-top: 20px;"></canvas>
         </div>
       </div>
       
@@ -105,5 +106,4 @@
     </div>
   </div>
 </div>
-
 
