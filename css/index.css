@@ -23,7 +23,9 @@ body, html {
     right: 0;
     margin: auto;
     width: fit-content;
+    width: -moz-fit-content;
     height: fit-content;
+    height: -moz-fit-content;
 }
 
 .buttonSection {
