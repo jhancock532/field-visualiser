@@ -1,0 +1,36 @@
+body, html {
+    height: 100%;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("./background.png");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.title {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+}
+
+.buttonSection {
+  margin-top: 30px;
+}
+
+.whatIsThisButton {
+  margin-top: 30px;
+}
+
