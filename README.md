@@ -24,3 +24,11 @@ A full list of the functions can be found <a href="http://mathjs.org/docs/refere
 <p><b>Working with conditional expressions.</b> What if you want to color the range of multiple functions? Use the convention <code>condition ? true : false</code> which should look something like this <code>x % d >= d/2 ? x*y : x*x+y*y</code>. This also works with the function <code>isPrime(x)</code> as the condition.</p>
 
 <p><b>Fullscreen and Trackbar input.</b> To fully admire your result, I adivse pressing the F11 key so that the entire canvas can be viewed on screen without scrolling. If this doesn't suite your display size, try zooming in and out of your browser window by using ctrl +- or ctrl and the scroll wheel. Regarding the trackbar input, once selected this can be changed one at a time using arrow keys, if this change is too small you can also hover over it with your mouse and use the scroll wheel. </p>
+
+<p><b>What about r, tx and ty?</b> These are some useful custom variables I've included as shorthand. They are defined in the script as follows:</p>
+ <code>
+  var pythag = math.compile("sqrt(y*y+x*x)"); //r, representing radius, or distance from center
+  var trigY = math.compile("(2*d*atan(abs(y/x)))/pi"); //ty, representing angle offset
+  var trigX = math.compile("(2*d*atan(abs(x/y)))/pi"); //tx, representing angle offset
+ </code>
+<p>I've previously had some luck with imaginary numbers and animations of these fields over time, although this was several years ago. You can see my results on a YouTube playlist, https://www.youtube.com/watch?v=yKvyjbIAQCE&list=PLU4oD5zYczKpqQaXiv3VMjS9umrRXi2nn</p>
