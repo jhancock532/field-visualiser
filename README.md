@@ -27,8 +27,8 @@ A full list of the functions can be found <a href="http://mathjs.org/docs/refere
 
 <p><b>What about r, tx and ty?</b> These are some useful custom variables I've included as shorthand. They are defined in the script as follows:</p>
  <code>
-  var pythag = math.compile("sqrt(y*y+x*x)"); //r, representing radius, or distance from center
-  var trigY = math.compile("(2*d*atan(abs(y/x)))/pi"); //ty, representing angle offset
-  var trigX = math.compile("(2*d*atan(abs(x/y)))/pi"); //tx, representing angle offset
+  var pythag = math.compile("sqrt(y*y+x*x)"); //r, representing radius, or distance from center<br>
+  var trigY = math.compile("(2*d*atan(abs(y/x)))/pi"); //ty, representing angle offset<br>
+  var trigX = math.compile("(2*d*atan(abs(x/y)))/pi"); //tx, representing angle offset<br>
  </code>
 <p>I've previously had some luck with imaginary numbers and animations of these fields over time, although this was several years ago. You can see my results on a YouTube playlist, https://www.youtube.com/watch?v=yKvyjbIAQCE&list=PLU4oD5zYczKpqQaXiv3VMjS9umrRXi2nn</p>
